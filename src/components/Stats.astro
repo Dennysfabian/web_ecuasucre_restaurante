@@ -1,0 +1,42 @@
+---
+const stats = [
+  { count: 5,    prefix: '',  suffix: ' años', label: 'Años compartiendo<br/>la cocina ecuatoriana' },
+  { count: 2000, prefix: '+', suffix: '',       label: 'Platos servidos<br/>cada mes' },
+  { count: 4,    prefix: '',  suffix: '.8 ★',    label: 'Valoración media<br/>en Google' },
+  { count: 3,    prefix: '',  suffix: ' regiones', label: 'Costa · Sierra<br/>Oriente' },
+];
+---
+<!-- ═══════════════════════════════════════════
+     STATS — Contadores animados con IntersectionObserver
+═══════════════════════════════════════════ -->
+<section class="py-10 md:py-14" style="background:#110904; border-top:1px solid rgba(200,150,50,.07); border-bottom:1px solid rgba(200,150,50,.07);">
+  <div class="sw">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
+
+      {stats.map((s, i) => (
+        <div class={`text-center reveal reveal-delay-${i + 1}`}>
+
+          <!-- Número animado -->
+          <div
+            class="stat-num mb-2"
+            data-count={s.count}
+            data-prefix={s.prefix}
+            data-suffix={s.suffix}
+          >
+            {s.prefix}0{s.suffix}
+          </div>
+
+          <!-- Separador dorado -->
+          <div class="w-6 h-[1px] mx-auto mb-2" style="background: rgba(200,150,50,.35);"></div>
+
+          <!-- Etiqueta -->
+          <p
+            class="font-brand text-[.6rem] tracking-[.18em] uppercase text-cream-soft/70 leading-[1.7]"
+            set:html={s.label}
+          />
+        </div>
+      ))}
+
+    </div>
+  </div>
+</section>

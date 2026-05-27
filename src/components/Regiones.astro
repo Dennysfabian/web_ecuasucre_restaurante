@@ -1,0 +1,83 @@
+---
+const regiones = [
+  {
+    id:    'costa',
+    img:   '/imagenes/costa.png',
+    alt:   'La Costa Ecuatoriana — playas y mar',
+    label: 'La Costa',
+    title: 'Mar & Sabor',
+    desc:  'Ceviche, encebollado y los frutos del mar que el Pacífico nos regala cada día. La frescura de la ola en cada plato.',
+    tint:  'rgba(20,60,100,.3)',
+  },
+  {
+    id:    'sierra',
+    img:   '/imagenes/sierra.jpg',
+    alt:   'La Sierra Ecuatoriana — Andes y volcanes',
+    label: 'La Sierra',
+    title: 'Tierra & Tradición',
+    desc:  'Fritada, guatita, llapingachos — el alma de los Andes en cada plato que preparamos desde siempre.',
+    tint:  'rgba(80,45,15,.3)',
+  },
+  {
+    id:    'oriente',
+    img:   '/imagenes/oriente.webp',
+    alt:   'El Oriente Ecuatoriano — Amazonía',
+    label: 'El Oriente',
+    title: 'Selva & Misterio',
+    desc:  'Sabores exóticos de la Amazonía: maito, chicha y los aromas únicos que solo la selva puede ofrecer.',
+    tint:  'rgba(10,55,15,.35)',
+  },
+];
+---
+<!-- ═══════════════════════════════════════════
+     LAS REGIONES — Costa · Sierra · Oriente
+═══════════════════════════════════════════ -->
+<section id="regiones" class="py-12 md:py-20" style="background:#110904;">
+  <div class="sw">
+
+    <!-- Encabezado -->
+    <div class="text-center mb-8 md:mb-12 reveal">
+      <p class="t-label mb-3">Las Regiones del Ecuador</p>
+      <h2
+        class="font-display font-semibold text-cream"
+        style="font-size: clamp(1.8rem, 4vw, 2.9rem); line-height: 1.2;"
+      >
+        Tres paisajes,<br/>
+        <em class="text-gold not-italic">un solo sabor</em>
+      </h2>
+      <div class="gold-divider mx-auto mt-6"></div>
+    </div>
+
+    <!-- Grid de Regiones -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 reveal">
+
+      {regiones.map((r, i) => (
+        <article class={`region-card reveal reveal-delay-${i + 1}`}>
+
+          <!-- NOTA DEV: Imagen de {r.label} — usar {r.img} -->
+          <div class="card-img-wrap">
+            <img src={r.img} alt={r.alt} loading="lazy" />
+          </div>
+
+          <!-- Tinte de color de región -->
+          <div class="absolute inset-0 rounded-[6px]" style={`background: ${r.tint}; mix-blend-mode: multiply; pointer-events: none;`}></div>
+
+          <!-- Overlay degradado -->
+          <div class="region-overlay"></div>
+
+          <!-- Contenido -->
+          <div class="region-content">
+            <span class="t-label-gold">{r.label}</span>
+            <h3 class="font-display text-[1.65rem] text-cream mt-2 mb-2 font-semibold leading-tight">
+              {r.title}
+            </h3>
+            <p class="text-[.8rem] text-cream-soft leading-[1.75]">{r.desc}</p>
+          </div>
+
+        </article>
+      ))}
+
+    </div>
+
+  </div>
+</section>

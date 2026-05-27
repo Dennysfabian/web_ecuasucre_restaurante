@@ -1,0 +1,30 @@
+---
+---
+<!-- ═══════════════════════════════════════════
+     MARQUEE — Dos filas, dirección opuesta
+═══════════════════════════════════════════ -->
+<div class="overflow-hidden py-[.85rem]" style="background:#110904; border-top:1px solid rgba(200,150,50,.1); border-bottom:1px solid rgba(200,150,50,.1);">
+
+  <!-- Fila 1: izquierda → -->
+  <div class="flex w-max animate-marquee-l mb-[6px]">
+    {['FRITADA SERRANA','✦','CEVICHE DE LA COSTA','✦','GUATITA TRADICIONAL','✦','ENCEBOLLADO','✦','SECO DE POLLO','✦','PATACONES','✦','MENESTRA CON ARROZ','✦','LLAPINGACHOS','✦',
+      'FRITADA SERRANA','✦','CEVICHE DE LA COSTA','✦','GUATITA TRADICIONAL','✦','ENCEBOLLADO','✦','SECO DE POLLO','✦','PATACONES','✦','MENESTRA CON ARROZ','✦','LLAPINGACHOS','✦'].map((item) => (
+      <span
+        class="font-brand text-[.6rem] tracking-[.28em] px-10 whitespace-nowrap"
+        style={item === '✦' ? 'color:rgba(200,150,50,.45);padding:0 1.5rem;' : 'color:#C89632;'}
+      >{item}</span>
+    ))}
+  </div>
+
+  <!-- Fila 2: ← derecha (dirección contraria) -->
+  <div class="flex w-max animate-marquee-r">
+    {['COCINA AUTÉNTICA','✦','DESDE ECUADOR','✦','RECETAS DE SIEMPRE','✦','CORAZÓN DE HOGAR','✦','COSTA · SIERRA · ORIENTE','✦','BARCELONA','✦','SABOR GENUINO','✦',
+      'COCINA AUTÉNTICA','✦','DESDE ECUADOR','✦','RECETAS DE SIEMPRE','✦','CORAZÓN DE HOGAR','✦','COSTA · SIERRA · ORIENTE','✦','BARCELONA','✦','SABOR GENUINO','✦'].map((item) => (
+      <span
+        class="font-brand text-[.55rem] tracking-[.24em] px-10 whitespace-nowrap"
+        style={item === '✦' ? 'color:rgba(196,174,138,.3);padding:0 1.5rem;' : 'color:rgba(196,174,138,.6);'}
+      >{item}</span>
+    ))}
+  </div>
+
+</div>

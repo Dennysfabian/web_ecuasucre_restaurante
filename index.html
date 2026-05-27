@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ecuasucre — Cocina Ecuatoriana Auténtica</title>
+  <meta name="description" content="Ecuasucre — Sabores auténticos del Ecuador. Fritada serrana, ceviche de la Costa, guatita y más. Ven a vivir la gastronomía ecuatoriana de verdad.">
+  <meta property="og:title" content="Ecuasucre — Cocina Ecuatoriana Auténtica">
+  <meta property="og:description" content="Sabores que nacen de la tierra. Cocina ecuatoriana tradicional, recetas de siempre.">
+  <meta property="og:image" content="imagenes/interior_uno.webp">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cinzel:wght@400;500;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root {
+      --bg:          #0D0806;
+      --bg-alt:      #110904;
+      --bg-alt2:     #160C06;
+      --card:        #1C0F07;
+      --card-h:      #231408;
+      --cream:       #F0E4CC;
+      --cream-soft:  #C4AE8A;
+      --gold:        #C89632;
+      --gold-light:  #DDB040;
+      --terra:       #B85C26;
+      --terra-light: #C86E34;
+      --amber:       #C87820;
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: 'Lato', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── TYPOGRAPHY ── */
+    .t-brand  { font-family:'Cinzel',serif; letter-spacing:.15em; }
+    .t-head   { font-family:'Playfair Display',serif; font-weight:600; }
+    .t-label  {
+      font-family:'Cinzel',serif;
+      font-size:.62rem;
+      letter-spacing:.3em;
+      text-transform:uppercase;
+      color: var(--terra);
+    }
+
+    /* ── NAV ── */
+    #main-nav {
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      padding:1.6rem 2rem;
+      transition: padding .4s ease, background .4s ease, border-color .4s ease;
+      border-bottom: 1px solid transparent;
+    }
+    #main-nav.scrolled {
+      background: rgba(13,8,6,.94);
+      backdrop-filter: blur(14px);
+      padding: 1rem 2rem;
+      border-bottom-color: rgba(200,150,50,.14);
+    }
+    .nav-link {
+      color: var(--cream-soft);
+      font-family:'Lato',sans-serif;
+      font-size:.78rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      text-decoration:none;
+      transition: color .25s;
+    }
+    .nav-link:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    #hero {
+      position:relative; height:100vh; min-height:640px;
+      overflow:hidden; display:flex;
+      align-items:center; justify-content:center;
+    }
+    #hero-bg {
+      position:absolute; inset:0;
+      background: url('imagenes/interior_uno.webp') center/cover no-repeat;
+      transform-origin:center;
+      animation: kenBurns 20s ease-in-out infinite alternate;
+    }
+    #hero-overlay {
+      position:absolute; inset:0;
+      background: linear-gradient(160deg,
+        rgba(13,8,6,.58) 0%,
+        rgba(22,12,6,.48) 45%,
+        rgba(13,8,6,.78) 100%);
+    }
+    @keyframes kenBurns {
+      from { transform: scale(1) translateX(0); }
+      to   { transform: scale(1.09) translateX(-2%); }
+    }
+    @keyframes logoReveal {
+      from { opacity:0; transform:scale(.88) translateY(12px); filter:blur(5px); }
+      to   { opacity:1; transform:scale(1) translateY(0);    filter:blur(0); }
+    }
+    #hero-logo { animation: logoReveal 1.3s cubic-bezier(.25,.46,.45,.94) .35s both; }
+
+    @keyframes scrollDrop {
+      0%,100% { transform:translateY(0);   opacity:.55; }
+      60%      { transform:translateY(7px); opacity:1; }
+    }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity:0; transform:translateY(30px);
+      transition: opacity .75s ease, transform .75s ease;
+    }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .reveal-delay-1 { transition-delay:.15s; }
+    .reveal-delay-2 { transition-delay:.3s; }
+    .reveal-delay-3 { transition-delay:.45s; }
+
+    /* ── DIVIDER ── */
+    .gold-divider {
+      width:48px; height:2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    /* ── BUTTONS ── */
+    .btn-primary {
+      display:inline-flex; align-items:center; justify-content:center; gap:.6rem;
+      background: var(--terra); color: var(--cream);
+      font-family:'Cinzel',serif; font-size:.72rem; letter-spacing:.2em;
+      padding:.9rem 2.2rem; border-radius:2px; text-decoration:none;
+      transition: background .3s, transform .2s;
+    }
+    .btn-primary:hover { background: var(--terra-light); transform:translateY(-2px); }
+    .btn-outline {
+      display:inline-flex; align-items:center; justify-content:center; gap:.6rem;
+      border: 1px solid rgba(200,150,50,.45); color: var(--cream);
+      font-family:'Cinzel',serif; font-size:.72rem; letter-spacing:.2em;
+      padding:.9rem 2.2rem; border-radius:2px; text-decoration:none;
+      transition: border-color .3s, background .3s;
+    }
+    .btn-outline:hover { border-color: var(--gold); background: rgba(200,150,50,.07); }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      overflow:hidden;
+      border-top:   1px solid rgba(200,150,50,.12);
+      border-bottom:1px solid rgba(200,150,50,.12);
+    }
+    .marquee-track {
+      display:flex; width:max-content;
+      animation: marquee 30s linear infinite;
+    }
+    @keyframes marquee {
+      from { transform:translateX(0); }
+      to   { transform:translateX(-50%); }
+    }
+
+    /* ── REGION CARDS ── */
+    .region-card {
+      position:relative; overflow:hidden;
+      border-radius:6px; cursor:pointer;
+    }
+    .region-card img {
+      width:100%; height:390px;
+      object-fit:cover;
+      transition: transform .65s ease;
+    }
+    .region-card:hover img { transform:scale(1.06); }
+    .region-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(to top,
+        rgba(13,8,6,.92) 0%,
+        rgba(13,8,6,.28) 55%,
+        transparent 100%);
+    }
+    .region-content {
+      position:absolute; bottom:0; left:0; right:0;
+      padding:1.8rem;
+    }
+
+    /* ── PLATO CARDS ── */
+    .plato-card {
+      background: var(--card);
+      border: 1px solid rgba(200,150,50,.08);
+      border-radius:6px; overflow:hidden;
+      transition: transform .3s, border-color .3s, box-shadow .3s;
+    }
+    .plato-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(200,150,50,.24);
+      box-shadow: 0 16px 40px rgba(0,0,0,.4);
+    }
+    .plato-card img {
+      width:100%; height:210px; object-fit:cover;
+      transition: transform .5s ease;
+    }
+    .plato-card:hover img { transform:scale(1.04); }
+
+    /* ── BENTO GALERÍA ── */
+    .bento-grid {
+      display:grid;
+      grid-template-columns: 1.45fr 1fr;
+      grid-template-rows:    260px 260px;
+      gap:12px;
+    }
+    .bento-grid .g-tall { grid-row: 1 / 3; }
+    .bento-grid .bento-img {
+      width:100%; height:100%;
+      object-fit:cover; border-radius:6px;
+      display:block;
+      transition: transform .5s ease;
+    }
+    .bento-img-wrap { overflow:hidden; border-radius:6px; }
+    .bento-img-wrap:hover .bento-img { transform:scale(1.04); }
+
+    /* ── HORARIOS ── */
+    .horario-row {
+      display:flex; justify-content:space-between; align-items:center;
+      padding:.75rem 0;
+      border-bottom:1px solid rgba(200,150,50,.08);
+    }
+    .horario-row:last-child { border-bottom:none; }
+
+    /* ── ANDEAN DECO (stepped corner pattern) ── */
+    .andean-deco {
+      position:absolute; pointer-events:none;
+    }
+
+    /* ── PARTICLES ── */
+    #particlesWrap {
+      position:absolute; inset:0;
+      pointer-events:none; overflow:hidden;
+      z-index:1;
+    }
+
+    /* ── SECTION WRAP ── */
+    .sw { max-width:1180px; margin:0 auto; padding:0 2rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width:900px) {
+      .grid-esencia  { grid-template-columns:1fr !important; gap:3rem !important; }
+      .grid-regiones { grid-template-columns:1fr 1fr !important; }
+      .grid-platos   { grid-template-columns:1fr 1fr !important; }
+      .grid-contacto { grid-template-columns:1fr !important; gap:3rem !important; }
+      .bento-grid    { grid-template-columns:1fr; grid-template-rows:auto; }
+      .bento-grid .g-tall { grid-row:auto; }
+      .bento-grid .bento-img { height:220px !important; }
+    }
+    @media (max-width:600px) {
+      .grid-regiones { grid-template-columns:1fr !important; }
+      .grid-platos   { grid-template-columns:1fr !important; }
+      .nav-links     { display:none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════
+     NAV
+════════════════════════════════ -->
+<nav id="main-nav">
+  <div class="sw" style="display:flex;align-items:center;justify-content:space-between;">
+    <a href="#hero" style="text-decoration:none;display:flex;align-items:center;gap:.75rem;">
+      <img src="imagenes/logo_sucre.png" alt="Ecuasucre"
+        style="height:46px;width:auto;object-fit:contain;filter:drop-shadow(0 0 8px rgba(200,150,50,.3));">
+    </a>
+    <div class="nav-links" style="display:flex;gap:2.5rem;align-items:center;">
+      <a href="#esencia"       class="nav-link">Nuestra Historia</a>
+      <a href="#especialidades" class="nav-link">Carta</a>
+      <a href="#galeria"       class="nav-link">Galería</a>
+      <a href="#contacto" class="btn-primary" style="padding:.6rem 1.5rem;font-size:.68rem;">
+        Reservar
+      </a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════════════
+     HERO
+════════════════════════════════ -->
+<section id="hero">
+  <div id="hero-bg"></div>
+  <div id="hero-overlay"></div>
+  <div id="particlesWrap"></div>
+
+  <!-- Stepped Andean corner — top-left -->
+  <svg class="andean-deco" style="top:0;left:0;width:180px;height:180px;opacity:.07;" viewBox="0 0 180 180" fill="none">
+    <path d="M0,0 L70,0 L70,14 L14,14 L14,70 L0,70 Z"   fill="#C89632"/>
+    <path d="M0,0 L48,0 L48,9  L9,9   L9,48   L0,48 Z"   fill="#C89632" opacity=".55"/>
+    <path d="M0,0 L26,0 L26,5  L5,5   L5,26   L0,26 Z"   fill="#C89632" opacity=".35"/>
+  </svg>
+  <!-- Stepped Andean corner — bottom-right -->
+  <svg class="andean-deco" style="bottom:0;right:0;width:180px;height:180px;opacity:.07;transform:rotate(180deg);" viewBox="0 0 180 180" fill="none">
+    <path d="M0,0 L70,0 L70,14 L14,14 L14,70 L0,70 Z"   fill="#C89632"/>
+    <path d="M0,0 L48,0 L48,9  L9,9   L9,48   L0,48 Z"   fill="#C89632" opacity=".55"/>
+    <path d="M0,0 L26,0 L26,5  L5,5   L5,26   L0,26 Z"   fill="#C89632" opacity=".35"/>
+  </svg>
+
+  <div style="position:relative;z-index:2;text-align:center;padding:2rem;">
+    <img id="hero-logo" src="imagenes/logo_sucre.png" alt="Ecuasucre"
+      style="height:116px;width:auto;object-fit:contain;margin:0 auto 1.6rem;display:block;
+             filter:drop-shadow(0 4px 28px rgba(0,0,0,.65));">
+
+    <p class="t-label" style="margin-bottom:1.1rem;">Restaurante Ecuatoriano</p>
+
+    <h1 class="t-head" style="font-size:clamp(2.2rem,6vw,4.2rem);color:var(--cream);line-height:1.14;margin-bottom:.9rem;">
+      Sabores que<br>
+      <em style="color:var(--gold);">nacen de la tierra</em>
+    </h1>
+
+    <p style="font-family:'Playfair Display',serif;font-style:italic;
+              font-size:clamp(.95rem,2.2vw,1.25rem);color:rgba(240,228,204,.82);
+              max-width:500px;margin:0 auto 2.6rem;line-height:1.75;">
+      Cocina auténtica del Ecuador — recetas de siempre,<br>corazón de hogar.
+    </p>
+
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a href="#especialidades" class="btn-primary">Ver la Carta</a>
+      <a href="#contacto"       class="btn-outline">Hacer Reserva</a>
+    </div>
+  </div>
+
+  <!-- scroll cue -->
+  <div style="position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:2;
+              display:flex;flex-direction:column;align-items:center;gap:.5rem;">
+    <span style="font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.3em;
+                 color:rgba(240,228,204,.38);text-transform:uppercase;">Descubrir</span>
+    <svg width="16" height="24" viewBox="0 0 16 24" fill="none" style="animation:scrollDrop 1.9s ease infinite;">
+      <rect x="6" y="2" width="4" height="4" rx="2" fill="rgba(200,150,50,.55)"/>
+      <path d="M8 10 L8 22 M3 17 L8 22 L13 17"
+            stroke="rgba(200,150,50,.38)" stroke-width="1.5"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     MARQUEE
+════════════════════════════════ -->
+<div class="marquee-wrap" style="background:var(--bg-alt);padding:.9rem 0;">
+  <div class="marquee-track">
+    <!-- first set -->
+    <span class="t-brand" style="font-size:.62rem;letter-spacing:.28em;color:var(--gold);   padding:0 3rem;">FRITADA SERRANA</span>
+    <span class="t-brand" style="font-size:.62rem;letter-spacing:.28em;color:var(--cream-soft);padding:0 2rem;">✦</span>
+    <span class="t-brand" style="font-size:.62rem;letter-spacing:.28em;color:var(--gold);   padding:0 3rem;">CEVICHE DE LA COSTA</span>
+    <span class="t-brand" style="font-size:.62rem;letter-spacing:.28em;color:var(--cream-soft);padding:0 2rem;">✦</span>
+    <span class="t-brand" style="font-size:.62rem;letter-spacing:.28em;color:var(--gold);   padding:0 3rem;">GUATITA TRADICIONAL</span>
+    <span class="t-brand" style="font-size:.62rem;letter-spacing:.28em;color:var(--cream-soft);padding:0 2rem;">✦</span>
+    <span class="t-brand" style="font-size:.62rem;letter-spacing:.28em;color:var(--gold);   padding:0 3rem;">MENESTRA CON ARROZ</span>
+    <span class="t-brand" style="font-size:.62rem;letter-spacing:.28em;color:var(--cream-soft);padding:0 2rem;">✦</span>
+    <span class="t-brand" style="font-size:.62rem;letter-spacing:.28em;color:var(--gold);   padding:0 3rem;">SECO DE POLLO</span>
+    <span class="t-brand" style="font-size:.62rem;letter-spacing:.28em;color:var(--cream-soft);padding:0 2rem;">✦</span>
+    <!-- duplicate for seamless loop -->
+    <span class="t-brand" style="font-size:.62rem;letter-spacing:.28em;color:var(--gold);   padding:0 3rem;">FRITADA SERRANA</span>
+    <span class="t-brand" style="font-size:.62rem;letter-spacing:.28em;color:var(--cream-soft);padding:0 2rem;">✦</span>
+    <span class="t-brand" style="font-size:.62rem;letter-spacing:.28em;color:var(--gold);   padding:0 3rem;">CEVICHE DE LA COSTA</span>
+    <span class="t-brand" style="font-size:.62rem;letter-spacing:.28em;color:var(--cream-soft);padding:0 2rem;">✦</span>
+    <span class="t-brand" style="font-size:.62rem;letter-spacing:.28em;color:var(--gold);   padding:0 3rem;">GUATITA TRADICIONAL</span>
+    <span class="t-brand" style="font-size:.62rem;letter-spacing:.28em;color:var(--cream-soft);padding:0 2rem;">✦</span>
+    <span class="t-brand" style="font-size:.62rem;letter-spacing:.28em;color:var(--gold);   padding:0 3rem;">MENESTRA CON ARROZ</span>
+    <span class="t-brand" style="font-size:.62rem;letter-spacing:.28em;color:var(--cream-soft);padding:0 2rem;">✦</span>
+    <span class="t-brand" style="font-size:.62rem;letter-spacing:.28em;color:var(--gold);   padding:0 3rem;">SECO DE POLLO</span>
+    <span class="t-brand" style="font-size:.62rem;letter-spacing:.28em;color:var(--cream-soft);padding:0 2rem;">✦</span>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════
+     NUESTRA ESENCIA
+════════════════════════════════ -->
+<section id="esencia" style="padding:4.5rem 0;background:var(--bg);">
+  <div class="sw">
+    <div class="grid-esencia reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;">
+
+      <!-- Texto -->
+      <div>
+        <p class="t-label" style="margin-bottom:1rem;">Nuestra Historia</p>
+        <h2 class="t-head" style="font-size:clamp(1.9rem,4vw,3rem);color:var(--cream);margin-bottom:1.4rem;line-height:1.22;">
+          Del corazón<br>del Ecuador<br>
+          <em style="color:var(--gold);">a tu mesa</em>
+        </h2>
+        <div class="gold-divider" style="margin-bottom:1.6rem;"></div>
+        <p style="color:var(--cream-soft);line-height:1.88;font-size:.93rem;margin-bottom:1.1rem;">
+          Ecuasucre nació de una promesa sencilla: traer a cada plato el sabor genuino de las regiones del Ecuador.
+          Desde los Andes hasta la Costa, cada receta lleva el peso de una tradición que se transmite de generación en generación.
+        </p>
+        <p style="color:var(--cream-soft);line-height:1.88;font-size:.93rem;margin-bottom:2.2rem;">
+          Cocinamos con ingredientes frescos, técnicas de siempre y el cariño que solo una cocina familiar puede dar.
+          Aquí, cada bocado es un viaje a casa.
+        </p>
+        <a href="#regiones" class="btn-outline">Las Regiones del Ecuador</a>
+      </div>
+
+      <!-- Imagen con marco dorado -->
+      <div style="position:relative;">
+        <img src="imagenes/interior_dos.webp" alt="Interior Ecuasucre"
+          style="width:100%;height:430px;object-fit:cover;border-radius:4px;
+                 filter:brightness(.92) saturate(1.1);">
+        <div style="position:absolute;inset:-10px;border:1px solid rgba(200,150,50,.2);
+                    border-radius:4px;pointer-events:none;"></div>
+        <div style="position:absolute;bottom:-1.4rem;left:50%;transform:translateX(-50%);
+                    background:var(--bg);padding:.55rem 1.6rem;
+                    border:1px solid rgba(200,150,50,.18);white-space:nowrap;">
+          <span class="t-brand" style="font-size:.56rem;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;">
+            Sabor Auténtico · Corazón Ecuatoriano
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     LAS REGIONES
+════════════════════════════════ -->
+<section id="regiones" style="padding:4.5rem 0;background:var(--bg-alt);">
+  <div class="sw">
+
+    <div style="text-align:center;margin-bottom:2.5rem;" class="reveal">
+      <p class="t-label" style="margin-bottom:.9rem;">Las Regiones del Ecuador</p>
+      <h2 class="t-head" style="font-size:clamp(1.8rem,4vw,2.9rem);color:var(--cream);">
+        Tres paisajes,<br>
+        <em style="color:var(--gold);">un solo sabor</em>
+      </h2>
+      <div class="gold-divider" style="margin:1.6rem auto 0;"></div>
+    </div>
+
+    <div class="grid-regiones reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;">
+
+      <!-- Costa -->
+      <div class="region-card">
+        <img src="imagenes/costa.png" alt="La Costa Ecuatoriana" loading="lazy">
+        <div class="region-overlay"></div>
+        <div class="region-content">
+          <span class="t-label" style="color:rgba(200,150,50,.85);">La Costa</span>
+          <h3 class="t-head" style="font-size:1.65rem;color:var(--cream);margin:.45rem 0 .65rem;">
+            Mar &amp; Sabor
+          </h3>
+          <p style="font-size:.8rem;color:var(--cream-soft);line-height:1.72;">
+            Ceviche, encebollado y los frutos del mar que el Pacífico nos regala cada día.
+          </p>
+        </div>
+      </div>
+
+      <!-- Sierra -->
+      <div class="region-card">
+        <img src="imagenes/sierra.jpg" alt="La Sierra Ecuatoriana" loading="lazy">
+        <div class="region-overlay"></div>
+        <div class="region-content">
+          <span class="t-label" style="color:rgba(200,150,50,.85);">La Sierra</span>
+          <h3 class="t-head" style="font-size:1.65rem;color:var(--cream);margin:.45rem 0 .65rem;">
+            Tierra &amp; Tradición
+          </h3>
+          <p style="font-size:.8rem;color:var(--cream-soft);line-height:1.72;">
+            Fritada, guatita, llapingachos — el alma de los Andes en cada plato que preparamos.
+          </p>
+        </div>
+      </div>
+
+      <!-- Oriente -->
+      <div class="region-card">
+        <img src="imagenes/oriente.webp" alt="El Oriente Ecuatoriano" loading="lazy">
+        <div class="region-overlay"></div>
+        <div class="region-content">
+          <span class="t-label" style="color:rgba(200,150,50,.85);">El Oriente</span>
+          <h3 class="t-head" style="font-size:1.65rem;color:var(--cream);margin:.45rem 0 .65rem;">
+            Selva &amp; Misterio
+          </h3>
+          <p style="font-size:.8rem;color:var(--cream-soft);line-height:1.72;">
+            Sabores exóticos de la Amazonía: maito, chicha y los aromas únicos de la selva.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     ESPECIALIDADES
+════════════════════════════════ -->
+<section id="especialidades" style="padding:4.5rem 0;background:var(--bg);">
+  <div class="sw">
+
+    <div style="text-align:center;margin-bottom:2.5rem;" class="reveal">
+      <p class="t-label" style="margin-bottom:.9rem;">Nuestros Platos</p>
+      <h2 class="t-head" style="font-size:clamp(1.8rem,4vw,2.9rem);color:var(--cream);">
+        Especialidades<br>
+        <em style="color:var(--gold);">de la casa</em>
+      </h2>
+      <div class="gold-divider" style="margin:1.6rem auto 0;"></div>
+    </div>
+
+    <div class="grid-platos reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;">
+
+      <!-- Ceviche -->
+      <div class="plato-card">
+        <div style="overflow:hidden;">
+          <img src="imagenes/plato_ceviche.webp" alt="Ceviche Mixto" loading="lazy">
+        </div>
+        <div style="padding:1.4rem;">
+          <span class="t-label" style="font-size:.52rem;color:var(--terra);">La Costa</span>
+          <h3 class="t-head" style="font-size:1.12rem;color:var(--cream);margin:.5rem 0 .6rem;">
+            Ceviche Mixto
+          </h3>
+          <p style="font-size:.78rem;color:var(--cream-soft);line-height:1.68;">
+            Camarones y calamar marinados en limón y naranjilla, con chifles y tostado.
+          </p>
+          <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(200,150,50,.1);
+                      display:flex;justify-content:space-between;align-items:center;">
+            <span class="t-brand" style="font-size:.92rem;color:var(--gold);">12,50 €</span>
+            <span class="t-brand" style="font-size:.55rem;color:var(--cream-soft);letter-spacing:.1em;">ESTRELLA ✦</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fritada -->
+      <div class="plato-card">
+        <div style="overflow:hidden;">
+          <img src="imagenes/plato_fritada.webp" alt="Fritada Serrana" loading="lazy">
+        </div>
+        <div style="padding:1.4rem;">
+          <span class="t-label" style="font-size:.52rem;color:var(--terra);">La Sierra</span>
+          <h3 class="t-head" style="font-size:1.12rem;color:var(--cream);margin:.5rem 0 .6rem;">
+            Fritada Serrana
+          </h3>
+          <p style="font-size:.78rem;color:var(--cream-soft);line-height:1.68;">
+            Cerdo frito a fuego lento, con mote, choclo, maduro y salsa criolla de tomate.
+          </p>
+          <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(200,150,50,.1);
+                      display:flex;justify-content:space-between;align-items:center;">
+            <span class="t-brand" style="font-size:.92rem;color:var(--gold);">13,00 €</span>
+            <span class="t-brand" style="font-size:.55rem;color:var(--terra);letter-spacing:.1em;">CHEF ✦</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Guatita -->
+      <div class="plato-card">
+        <div style="overflow:hidden;">
+          <img src="imagenes/plato_guatita.webp" alt="Guatita" loading="lazy">
+        </div>
+        <div style="padding:1.4rem;">
+          <span class="t-label" style="font-size:.52rem;color:var(--terra);">La Sierra</span>
+          <h3 class="t-head" style="font-size:1.12rem;color:var(--cream);margin:.5rem 0 .6rem;">
+            Guatita
+          </h3>
+          <p style="font-size:.78rem;color:var(--cream-soft);line-height:1.68;">
+            Mondongo en salsa de maní con papa y ají. Una receta que se hereda, no se inventa.
+          </p>
+          <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(200,150,50,.1);
+                      display:flex;justify-content:space-between;align-items:center;">
+            <span class="t-brand" style="font-size:.92rem;color:var(--gold);">11,50 €</span>
+            <span class="t-brand" style="font-size:.55rem;color:var(--cream-soft);letter-spacing:.1em;">CLÁSICO ✦</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Menestra -->
+      <div class="plato-card">
+        <div style="overflow:hidden;">
+          <img src="imagenes/plato_menestra.webp" alt="Menestra con Carne" loading="lazy">
+        </div>
+        <div style="padding:1.4rem;">
+          <span class="t-label" style="font-size:.52rem;color:var(--terra);">La Sierra</span>
+          <h3 class="t-head" style="font-size:1.12rem;color:var(--cream);margin:.5rem 0 .6rem;">
+            Menestra con Carne
+          </h3>
+          <p style="font-size:.78rem;color:var(--cream-soft);line-height:1.68;">
+            Lentejas guisadas con carne asada, arroz y maduro frito. El plato del día a día.
+          </p>
+          <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(200,150,50,.1);
+                      display:flex;justify-content:space-between;align-items:center;">
+            <span class="t-brand" style="font-size:.92rem;color:var(--gold);">10,50 €</span>
+            <span class="t-brand" style="font-size:.55rem;color:var(--cream-soft);letter-spacing:.1em;">POPULAR ✦</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="text-align:center;margin-top:3.2rem;" class="reveal reveal-delay-1">
+      <p style="font-family:'Playfair Display',serif;font-style:italic;
+                color:var(--cream-soft);margin-bottom:1.6rem;font-size:.92rem;">
+        Carta completa disponible en el restaurante y al realizar tu reserva.
+      </p>
+      <a href="#contacto" class="btn-primary">Reservar Mesa</a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     GALERÍA
+════════════════════════════════ -->
+<section id="galeria" style="padding:4.5rem 0;background:var(--bg-alt);">
+  <div class="sw">
+
+    <div style="text-align:center;margin-bottom:2.5rem;" class="reveal">
+      <p class="t-label" style="margin-bottom:.9rem;">El Ambiente</p>
+      <h2 class="t-head" style="font-size:clamp(1.8rem,4vw,2.9rem);color:var(--cream);">
+        Un espacio para<br>
+        <em style="color:var(--gold);">compartir</em>
+      </h2>
+      <div class="gold-divider" style="margin:1.6rem auto 0;"></div>
+    </div>
+
+    <div class="bento-grid reveal">
+      <div class="bento-img-wrap g-tall">
+        <img src="imagenes/interior_uno.webp"    class="bento-img" alt="Interior Ecuasucre" style="height:532px;">
+      </div>
+      <div class="bento-img-wrap">
+        <img src="imagenes/interior_tres.webp"   class="bento-img" alt="Sala Ecuasucre">
+      </div>
+      <div class="bento-img-wrap">
+        <img src="imagenes/interior_cuatro.webp" class="bento-img" alt="Rincón Ecuasucre">
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     CONTACTO / HORARIOS
+════════════════════════════════ -->
+<section id="contacto" style="padding:4.5rem 0;background:var(--bg);position:relative;overflow:hidden;">
+
+  <!-- Andean deco corners -->
+  <svg class="andean-deco" style="top:0;right:0;width:260px;height:260px;opacity:.05;transform:rotate(90deg);" viewBox="0 0 200 200" fill="none">
+    <path d="M0,0 L90,0 L90,18 L18,18 L18,90 L0,90 Z" fill="#C89632"/>
+    <path d="M0,0 L60,0 L60,12 L12,12 L12,60 L0,60 Z" fill="#C89632" opacity=".5"/>
+    <path d="M0,0 L32,0 L32,6  L6,6   L6,32  L0,32 Z" fill="#C89632" opacity=".3"/>
+  </svg>
+  <svg class="andean-deco" style="bottom:0;left:0;width:240px;height:240px;opacity:.05;transform:rotate(270deg);" viewBox="0 0 200 200" fill="none">
+    <path d="M0,0 L90,0 L90,18 L18,18 L18,90 L0,90 Z" fill="#C89632"/>
+    <path d="M0,0 L60,0 L60,12 L12,12 L12,60 L0,60 Z" fill="#C89632" opacity=".5"/>
+  </svg>
+
+  <div class="sw">
+
+    <div style="text-align:center;margin-bottom:2.5rem;" class="reveal">
+      <p class="t-label" style="margin-bottom:.9rem;">Visítanos</p>
+      <h2 class="t-head" style="font-size:clamp(1.8rem,4vw,2.9rem);color:var(--cream);">
+        Horarios &amp;<br>
+        <em style="color:var(--gold);">Reservas</em>
+      </h2>
+      <div class="gold-divider" style="margin:1.6rem auto 0;"></div>
+    </div>
+
+    <div class="grid-contacto reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;">
+
+      <!-- Horarios -->
+      <div>
+        <h3 class="t-brand" style="font-size:.68rem;letter-spacing:.25em;color:var(--gold);
+                                   margin-bottom:1.6rem;text-transform:uppercase;">
+          Horario de Apertura
+        </h3>
+
+        <div class="horario-row">
+          <span class="t-head" style="font-size:.94rem;color:var(--cream);">Martes — Miércoles</span>
+          <span class="t-brand" style="font-size:.78rem;color:var(--cream-soft);">12:00 — 22:00</span>
+        </div>
+        <div class="horario-row">
+          <span class="t-head" style="font-size:.94rem;color:var(--cream);">Jueves — Viernes</span>
+          <span class="t-brand" style="font-size:.78rem;color:var(--cream-soft);">12:00 — 23:30</span>
+        </div>
+        <div class="horario-row">
+          <span class="t-head" style="font-size:.94rem;color:var(--cream);">Sábado</span>
+          <span class="t-brand" style="font-size:.78rem;color:var(--gold);">11:00 — 23:30</span>
+        </div>
+        <div class="horario-row">
+          <span class="t-head" style="font-size:.94rem;color:var(--cream);">Domingo</span>
+          <span class="t-brand" style="font-size:.78rem;color:var(--gold);">11:00 — 22:00</span>
+        </div>
+        <div class="horario-row">
+          <span class="t-head" style="font-size:.94rem;color:rgba(240,228,204,.35);">Lunes</span>
+          <span class="t-brand" style="font-size:.78rem;color:rgba(200,150,50,.3);">Cerrado</span>
+        </div>
+
+        <div style="margin-top:2.4rem;padding:1.5rem;background:var(--card);
+                    border:1px solid rgba(200,150,50,.1);border-radius:4px;">
+          <p class="t-label" style="font-size:.56rem;margin-bottom:.6rem;">Ubicación</p>
+          <p class="t-head"  style="font-size:.98rem;color:var(--cream);margin-bottom:.3rem;">
+            📍 Dirección del restaurante
+          </p>
+          <p style="font-size:.82rem;color:var(--cream-soft);">Barcelona / L'Hospitalet · España</p>
+        </div>
+      </div>
+
+      <!-- Reserva -->
+      <div>
+        <h3 class="t-brand" style="font-size:.68rem;letter-spacing:.25em;color:var(--gold);
+                                   margin-bottom:1.6rem;text-transform:uppercase;">
+          Haz Tu Reserva
+        </h3>
+
+        <p style="color:var(--cream-soft);line-height:1.88;font-size:.9rem;margin-bottom:2.4rem;">
+          Reserva tu mesa y asegúrate de vivir la experiencia Ecuasucre.
+          Para grupos de más de 6 personas, te pedimos que contactes directamente
+          por WhatsApp o teléfono.
+        </p>
+
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <a href="https://wa.me/34600000000?text=Hola!%20Quiero%20reservar%20mesa%20en%20Ecuasucre."
+             target="_blank" rel="noopener" class="btn-primary">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Reservar por WhatsApp
+          </a>
+          <a href="tel:+34600000000" class="btn-outline">Llamar ahora</a>
+        </div>
+
+        <div style="margin-top:2.4rem;padding:1.5rem;background:var(--card);
+                    border:1px solid rgba(200,150,50,.08);border-radius:4px;text-align:center;">
+          <p style="font-family:'Playfair Display',serif;font-style:italic;
+                    font-size:.88rem;color:var(--cream-soft);line-height:1.75;">
+            "La cocina ecuatoriana es una de las más ricas de América Latina
+            — y nosotros la traemos a tu puerta."
+          </p>
+          <div style="width:30px;height:1px;background:var(--gold);margin:1rem auto 0;opacity:.35;"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     FOOTER
+════════════════════════════════ -->
+<footer style="background:#070403;border-top:1px solid rgba(200,150,50,.1);padding:4rem 0 2.5rem;">
+  <div class="sw">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:1.5rem;margin-bottom:3rem;">
+      <img src="imagenes/logo_sucre.png" alt="Ecuasucre"
+        style="height:62px;width:auto;object-fit:contain;
+               filter:drop-shadow(0 0 10px rgba(200,150,50,.24));">
+      <p class="t-label" style="font-size:.58rem;">Cocina Ecuatoriana Auténtica</p>
+      <div style="display:flex;gap:2.5rem;flex-wrap:wrap;justify-content:center;">
+        <a href="#esencia"        class="t-brand" style="font-size:.58rem;letter-spacing:.2em;color:var(--cream-soft);text-decoration:none;text-transform:uppercase;transition:color .25s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--cream-soft)'">Historia</a>
+        <a href="#regiones"       class="t-brand" style="font-size:.58rem;letter-spacing:.2em;color:var(--cream-soft);text-decoration:none;text-transform:uppercase;transition:color .25s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--cream-soft)'">Regiones</a>
+        <a href="#especialidades" class="t-brand" style="font-size:.58rem;letter-spacing:.2em;color:var(--cream-soft);text-decoration:none;text-transform:uppercase;transition:color .25s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--cream-soft)'">Carta</a>
+        <a href="#galeria"        class="t-brand" style="font-size:.58rem;letter-spacing:.2em;color:var(--cream-soft);text-decoration:none;text-transform:uppercase;transition:color .25s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--cream-soft)'">Galería</a>
+        <a href="#contacto"       class="t-brand" style="font-size:.58rem;letter-spacing:.2em;color:var(--cream-soft);text-decoration:none;text-transform:uppercase;transition:color .25s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--cream-soft)'">Reservas</a>
+      </div>
+      <div style="width:50px;height:1px;background:linear-gradient(90deg,transparent,rgba(200,150,50,.28),transparent);"></div>
+    </div>
+    <p class="t-brand" style="text-align:center;font-size:.53rem;letter-spacing:.2em;
+                               color:rgba(200,150,50,.22);text-transform:uppercase;">
+      © 2025 Ecuasucre · Todos los derechos reservados
+    </p>
+  </div>
+</footer>
+
+
+<!-- ════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════ -->
+<script>
+  /* ── SCROLL REVEAL ── */
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.10 });
+  revealEls.forEach(el => io.observe(el));
+
+  /* ── NAV SCROLL ── */
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 70);
+  }, { passive: true });
+
+  /* ── WARM PARTICLES (glow de oro/terracota) ── */
+  const wrap = document.getElementById('particlesWrap');
+  function spawnParticle() {
+    const e    = document.createElement('div');
+    const size = 1.5 + Math.random() * 3;
+    const x    = 5   + Math.random() * 90;
+    const drift= (Math.random() - .5) * 110;
+    const dur  = 4200 + Math.random() * 3200;
+    const cols = ['#C89632','#D4A040','#DDB040','#B85C26','#C86E34'];
+    Object.assign(e.style, {
+      position:'absolute', bottom:'0', left: x + '%',
+      width: size + 'px', height: size + 'px', borderRadius:'50%',
+      background:`radial-gradient(circle, ${cols[Math.floor(Math.random()*cols.length)]} 0%, transparent 70%)`,
+      pointerEvents:'none',
+    });
+    wrap.appendChild(e);
+    e.animate([
+      { transform:'translateY(0) translateX(0) scale(1)',                                            opacity:.78 },
+      { transform:`translateY(-${290 + Math.random()*200}px) translateX(${drift}px) scale(.15)`, opacity:0  }
+    ], { duration:dur, easing:'cubic-bezier(.25,.46,.45,.94)' }).onfinish = () => e.remove();
+  }
+  setInterval(spawnParticle, 620);
+
+  /* ── RESPONSIVE NAV: hide text links on narrow screens ── */
+  function checkNav() {
+    const links = document.querySelector('.nav-links');
+    if (links) links.style.display = window.innerWidth < 600 ? 'none' : '';
+  }
+  checkNav();
+  window.addEventListener('resize', checkNav);
+</script>
+
+</body>
+</html>

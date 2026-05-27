@@ -1,0 +1,63 @@
+---
+---
+<!-- ═══════════════════════════════════════════
+     NAV — Fixed, transparente → blur oscuro
+═══════════════════════════════════════════ -->
+<nav id="main-nav">
+  <div class="sw flex items-center justify-between">
+
+    <!-- Logo -->
+    <a href="#hero" class="flex items-center gap-3 no-underline group">
+      <!-- NOTA DEV: Logo principal del restaurante (fondo transparente ideal) -->
+      <img
+        src="/imagenes/logo_sucre.png"
+        alt="Ecuasucre"
+        class="h-[46px] w-auto object-contain"
+        style="filter: drop-shadow(0 0 8px rgba(200,150,50,.3));"
+      />
+    </a>
+
+    <!-- Desktop links -->
+    <div class="hidden md:flex items-center gap-9">
+      <a href="#esencia"        class="nav-link">Nuestra Historia</a>
+      <a href="#regiones"       class="nav-link">Las Regiones</a>
+      <a href="#especialidades" class="nav-link">Carta</a>
+      <a href="#galeria"        class="nav-link">Galería</a>
+      <a href="#contacto" class="btn-primary" style="padding:.62rem 1.5rem; font-size:.68rem;">
+        Reservar Mesa
+      </a>
+    </div>
+
+    <!-- Hamburger (mobile) -->
+    <button
+      id="menu-btn"
+      aria-label="Abrir menú"
+      class="md:hidden flex flex-col gap-[5px] p-2 z-[101]"
+    >
+      <span class="block w-6 h-[1.5px] bg-cream transition-all duration-300"></span>
+      <span class="block w-6 h-[1.5px] bg-cream transition-all duration-300"></span>
+      <span class="block w-4 h-[1.5px] bg-gold transition-all duration-300"></span>
+    </button>
+
+  </div>
+</nav>
+
+<!-- Mobile overlay menu -->
+<div id="mobile-menu">
+  <button id="menu-close" aria-label="Cerrar menú" class="absolute top-6 right-6 p-2">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C4AE8A" stroke-width="1.5">
+      <path d="M18 6L6 18M6 6l12 12"/>
+    </svg>
+  </button>
+
+  <!-- NOTA DEV: Logo en menú móvil -->
+  <img src="/imagenes/logo_sucre.png" alt="Ecuasucre" class="h-16 w-auto mb-4 opacity-80" />
+  <div class="w-8 h-[1px] bg-gold/30 mb-6"></div>
+
+  <a href="#esencia">Nuestra Historia</a>
+  <a href="#regiones">Las Regiones</a>
+  <a href="#especialidades">Carta</a>
+  <a href="#galeria">Galería</a>
+  <a href="#testimonios">Reseñas</a>
+  <a href="#contacto" class="btn-primary mt-4">Reservar Mesa</a>
+</div>

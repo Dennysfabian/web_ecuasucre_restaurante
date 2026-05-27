@@ -1,0 +1,96 @@
+---
+---
+<!-- ═══════════════════════════════════════════
+     COTOPAXI — Parallax break. Sección cinematográfica
+     NOTA DEV: Usa cotopaxi.jpg — foto impresionante del volcán con cielo dramático
+═══════════════════════════════════════════ -->
+<section
+  id="cotopaxi-bg"
+  class="relative flex items-center justify-center overflow-hidden"
+  style="height: 62vh; min-height: 420px;"
+  aria-label="El Cotopaxi — Los Andes Ecuatorianos"
+>
+
+  <!-- Overlay con degradado diagonal -->
+  <div
+    class="absolute inset-0"
+    style="background: linear-gradient(150deg, rgba(13,8,6,.72) 0%, rgba(13,8,6,.48) 50%, rgba(13,8,6,.75) 100%);"
+  ></div>
+
+  <!-- Decoración: líneas horizontales estilo andino -->
+  <div class="andean-deco inset-0 flex items-center justify-center opacity-[.055] pointer-events-none">
+    <svg width="700" height="120" viewBox="0 0 700 120" fill="none" class="w-[min(700px,90vw)]">
+      <line x1="0"   y1="60" x2="260" y2="60" stroke="#C89632" stroke-width="1"/>
+      <path d="M270,60 L305,30 L340,60 L375,30 L410,60 L445,30 L480,60" stroke="#C89632" stroke-width="1" fill="none"/>
+      <line x1="490" y1="60" x2="700" y2="60" stroke="#C89632" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <!-- ── CONTENIDO ── -->
+  <div class="relative z-10 text-center px-6 max-w-2xl mx-auto reveal">
+
+    <!-- Ornamento de apertura -->
+    <div class="flex items-center justify-center gap-4 mb-7">
+      <div class="flex-1 h-[1px] max-w-[80px]" style="background: linear-gradient(to right, transparent, rgba(200,150,50,.5));"></div>
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <path d="M11 1 L13 9 L21 11 L13 13 L11 21 L9 13 L1 11 L9 9 Z" fill="rgba(200,150,50,.7)"/>
+      </svg>
+      <div class="flex-1 h-[1px] max-w-[80px]" style="background: linear-gradient(to left, transparent, rgba(200,150,50,.5));"></div>
+    </div>
+
+    <!-- Quote -->
+    <blockquote>
+      <p
+        class="font-display italic text-cream leading-[1.55] mb-5"
+        style="font-size: clamp(1.45rem, 3.5vw, 2.4rem); text-shadow: 0 2px 20px rgba(0,0,0,.6);"
+      >
+        "Donde los Andes alimentan<br class="hidden sm:block" />
+        el alma y la mesa"
+      </p>
+      <footer class="t-label-gold">
+        — Ecuasucre, Barcelona
+      </footer>
+    </blockquote>
+
+    <!-- Ornamento de cierre -->
+    <div class="flex items-center justify-center gap-4 mt-7">
+      <div class="flex-1 h-[1px] max-w-[80px]" style="background: linear-gradient(to right, transparent, rgba(200,150,50,.3));"></div>
+      <span class="font-brand text-[.52rem] tracking-[.35em] text-gold/50">ECUADOR</span>
+      <div class="flex-1 h-[1px] max-w-[80px]" style="background: linear-gradient(to left, transparent, rgba(200,150,50,.3));"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── GSAP PARALLAX en Cotopaxi ── -->
+<script is:inline>
+  (function () {
+    function initParallax() {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        setTimeout(initParallax, 80);
+        return;
+      }
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      var sec = document.getElementById('cotopaxi-bg');
+      if (!sec) return;
+
+      // Solo parallax en escritorio (background-attachment:fixed falla en iOS)
+      if (window.innerWidth > 768) return; // CSS ya lo maneja en desktop
+
+      gsap.to(sec, {
+        backgroundPositionY: '30%',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sec,
+          start:   'top bottom',
+          end:     'bottom top',
+          scrub:   true,
+        },
+      });
+    }
+
+    initParallax();
+  })();
+</script>

@@ -1,0 +1,214 @@
+---
+---
+<!-- ═══════════════════════════════════════════
+     HERO — Full-viewport, Ken Burns + Partículas
+     Animaciones 100% CSS (no depende de GSAP CDN)
+═══════════════════════════════════════════ -->
+<section id="hero" class="relative overflow-hidden flex items-center justify-center" style="height:100vh;min-height:640px;isolation:isolate;">
+
+  <!-- ── FONDO con efecto Ken Burns ── -->
+  <!-- NOTA DEV: interior_uno.webp — foto principal del local, iluminación cálida -->
+  <div
+    id="hero-bg"
+    class="absolute inset-0 animate-ken-burns"
+    style="background:url('/imagenes/interior_uno.webp') center/cover no-repeat; transform-origin:center;"
+  ></div>
+
+  <!-- ── OVERLAY degradado oscuro ── -->
+  <div
+    class="absolute inset-0"
+    style="background:linear-gradient(160deg,rgba(13,8,6,.62) 0%,rgba(22,12,6,.50) 45%,rgba(13,8,6,.84) 100%);"
+  ></div>
+
+  <!-- ── PARTÍCULAS flotantes (JS las crea) ── -->
+  <div id="particles-wrap"></div>
+
+  <!-- ── DECORACIÓN Andina — esquinas escalonadas ── -->
+  <svg class="andean-deco" style="top:0;left:0;width:200px;height:200px;opacity:.07;" viewBox="0 0 200 200" fill="none">
+    <path d="M0,0 L80,0 L80,16 L16,16 L16,80 L0,80 Z" fill="#C89632"/>
+    <path d="M0,0 L54,0 L54,10 L10,10 L10,54 L0,54 Z" fill="#C89632" opacity=".55"/>
+    <path d="M0,0 L30,0 L30,6  L6,6   L6,30  L0,30 Z" fill="#C89632" opacity=".3"/>
+  </svg>
+  <svg class="andean-deco" style="bottom:0;right:0;width:200px;height:200px;opacity:.07;transform:rotate(180deg);" viewBox="0 0 200 200" fill="none">
+    <path d="M0,0 L80,0 L80,16 L16,16 L16,80 L0,80 Z" fill="#C89632"/>
+    <path d="M0,0 L54,0 L54,10 L10,10 L10,54 L0,54 Z" fill="#C89632" opacity=".55"/>
+    <path d="M0,0 L30,0 L30,6  L6,6   L6,30  L0,30 Z" fill="#C89632" opacity=".3"/>
+  </svg>
+
+  <!-- ── CONTENIDO CENTRAL ── -->
+  <div class="relative z-[2] text-center px-6 max-w-3xl mx-auto">
+
+    <!-- Logo — entrada con CSS animation (no depende de JS) -->
+    <!-- NOTA DEV: logo_sucre.png — logo principal con fondo transparente -->
+    <img
+      id="hero-logo"
+      src="/imagenes/logo_sucre.png"
+      alt="Ecuasucre"
+      class="mx-auto mb-6 w-auto object-contain"
+      style="height:clamp(90px,12vw,130px);
+             filter:drop-shadow(0 4px 32px rgba(0,0,0,.7));
+             animation:heroLogoReveal 1.3s cubic-bezier(.25,.46,.45,.94) .2s both;"
+    />
+
+    <p
+      class="t-label mb-4"
+      style="animation:heroFadeUp .8s ease .75s both;"
+    >
+      Restaurante Ecuatoriano · Barcelona
+    </p>
+
+    <h1
+      class="font-display font-semibold text-cream leading-[1.12] mb-4"
+      style="font-size:clamp(2.4rem,6vw,4.4rem);
+             animation:heroFadeUp 1s cubic-bezier(.25,.46,.45,.94) 1s both;"
+    >
+      Sabores que<br />
+      <em class="text-gold not-italic">nacen de la tierra</em>
+    </h1>
+
+    <p
+      class="font-display italic text-cream/80 max-w-md mx-auto leading-[1.82] mb-8"
+      style="font-size:clamp(.95rem,2vw,1.2rem);
+             animation:heroFadeUp .9s ease 1.35s both;"
+    >
+      Cocina auténtica del Ecuador — recetas de siempre,<br class="hidden sm:block" />
+      corazón de hogar.
+    </p>
+
+    <div
+      class="flex gap-3 justify-center flex-wrap"
+      style="animation:heroFadeUp .8s ease 1.65s both;"
+    >
+      <a href="#especialidades" class="btn-primary">Ver la Carta</a>
+      <a href="#contacto"       class="btn-outline">Hacer Reserva</a>
+    </div>
+  </div>
+
+  <!-- ── INDICADOR DE SCROLL ── -->
+  <div
+    class="absolute bottom-8 left-1/2 -translate-x-1/2 z-[2] flex flex-col items-center gap-2"
+    style="animation:heroFadeUp .8s ease 2s both;"
+  >
+    <span class="font-brand text-[.52rem] tracking-[.3em] text-cream/35 uppercase">Descubrir</span>
+    <svg width="16" height="24" viewBox="0 0 16 24" fill="none" class="animate-scroll-drop">
+      <rect x="6" y="2" width="4" height="4" rx="2" fill="rgba(200,150,50,.55)"/>
+      <path d="M8 10 L8 22 M3 17 L8 22 L13 17"
+        stroke="rgba(200,150,50,.4)" stroke-width="1.5"
+        stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ── KEYFRAMES del Hero (inline para garantía) ── -->
+<style>
+  @keyframes heroLogoReveal {
+    from { opacity: 0; transform: scale(.86) translateY(10px); filter: blur(10px); }
+    to   { opacity: 1; transform: scale(1)   translateY(0);    filter: blur(0); }
+  }
+  @keyframes heroFadeUp {
+    from { opacity: 0; transform: translateY(26px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<!-- ── BANDERA DE AIRE — velo sutil de los colores de Ecuador ── -->
+<script is:inline>
+  (function () {
+    var hero = document.getElementById('hero');
+    if (!hero) return;
+
+    function sweep() {
+      var el        = document.createElement('div');
+      var fromRight = Math.random() > 0.78;
+      var skew  = fromRight ? (5 + Math.random() * 9) : -(5 + Math.random() * 9);
+      var alpha  = 0.09 + Math.random() * 0.09;   // 0.09–0.18 sutil
+      var dur    = 6000 + Math.random() * 3500;
+
+      // ── Colores bandera Ecuador (proporciones reales) ──
+      // Amarillo: 0%–50% | Azul: 50%–75% | Rojo: 75%–100%
+      var y = alpha;
+      var b = alpha * 0.88;
+      var r = alpha * 0.88;
+
+      // height:100% = exactamente la altura del hero → las tres franjas
+      // quedan dentro del viewport:
+      //   Amarillo  0%–50%  →  0–50vh  (mitad superior)
+      //   Azul     50%–75%  →  50–75vh
+      //   Rojo     75%–100% →  75–100vh (franja inferior)
+      el.style.cssText =
+        'position:absolute;' +
+        'top:0;left:0;' +
+        'width:82%;height:100%;' +
+        'background:linear-gradient(180deg,' +
+          'rgba(255,214,0,'  + y + ') 0%,'  +
+          'rgba(255,214,0,'  + y + ') 50%,' +
+          'rgba(0,56,168,'   + b + ') 50%,' +
+          'rgba(0,56,168,'   + b + ') 74%,' +
+          'rgba(218,18,26,'  + r + ') 75%,' +
+          'rgba(218,18,26,'  + r + ') 100%' +
+        ');' +
+        'filter:blur(22px);' +
+        'pointer-events:none;' +
+        'z-index:1;';
+
+      hero.appendChild(el);
+
+      // translateX(%) es relativo al ancho del propio elemento (78% del hero)
+      // Para que cruze completamente:
+      //   -170%  →  off-screen izquierda  (1.7 × 78% = 132.6% del hero hacia la izq.)
+      //   +220%  →  off-screen derecha    (2.2 × 78% = 171.6% del hero hacia la der.)
+      var startX  = fromRight ? '220%'  : '-170%';
+      var peakInX = fromRight ? '85%'   : '-65%';
+      var peakOutX= fromRight ? '-75%'  : '85%';
+      var endX    = fromRight ? '-210%' : '220%';
+
+      el.animate([
+        { transform: 'translateX(' + startX   + ') skewX(' + skew + 'deg)', opacity: 0   },
+        { transform: 'translateX(' + peakInX  + ') skewX(' + skew + 'deg)', opacity: 1, offset: 0.10 },
+        { transform: 'translateX(' + peakOutX + ') skewX(' + skew + 'deg)', opacity: 1, offset: 0.88 },
+        { transform: 'translateX(' + endX     + ') skewX(' + skew + 'deg)', opacity: 0   },
+      ], {
+        duration: dur,
+        easing: 'cubic-bezier(.22,.68,0,1.08)',
+      }).onfinish = function () { el.remove(); };
+    }
+
+    function schedule() {
+      // Aparece cada 10–18 segundos, de forma irregular
+      setTimeout(function () { sweep(); schedule(); },
+        10000 + Math.random() * 8000);
+    }
+
+    // Primera aparición a los 3 s (después de que el hero termine de entrar)
+    setTimeout(function () { sweep(); schedule(); }, 3000);
+  })();
+</script>
+
+<!-- ── PARTÍCULAS (cálidas, oro/terra) ── -->
+<script is:inline>
+  (function () {
+    var wrap = document.getElementById('particles-wrap');
+    if (!wrap) return;
+    var cols = ['#C89632','#D4A040','#DDB040','#B85C26','#C86E34','#E0B050'];
+    function spawn() {
+      var el   = document.createElement('div');
+      var size = 1.5 + Math.random() * 3.5;
+      var x    = 4 + Math.random() * 92;
+      var dx   = (Math.random() - .5) * 130;
+      var dur  = 4400 + Math.random() * 3200;
+      var col  = cols[Math.floor(Math.random() * cols.length)];
+      Object.assign(el.style, {
+        position:'absolute', bottom:'0', left:x+'%',
+        width:size+'px', height:size+'px', borderRadius:'50%',
+        background:'radial-gradient(circle,'+col+' 0%,transparent 70%)',
+        pointerEvents:'none',
+      });
+      wrap.appendChild(el);
+      el.animate([
+        { transform:'translateY(0) translateX(0) scale(1)',       opacity:.82 },
+        { transform:'translateY(-'+(280+Math.random()*220)+'px) translateX('+dx+'px) scale(.1)', opacity:0 },
+      ],{ duration:dur, easing:'cubic-bezier(.25,.46,.45,.94)' }).onfinish = function(){ el.remove(); };
+    }
+    setInterval(spawn, 580);
+  })();
+</script>

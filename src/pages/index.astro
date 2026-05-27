@@ -1,0 +1,51 @@
+---
+import Layout    from '../layouts/Layout.astro';
+import Nav       from '../components/Nav.astro';
+import Hero      from '../components/Hero.astro';
+import Marquee   from '../components/Marquee.astro';
+import Esencia   from '../components/Esencia.astro';
+import Stats     from '../components/Stats.astro';
+import Regiones  from '../components/Regiones.astro';
+import Cotopaxi  from '../components/Cotopaxi.astro';
+import Services  from '../components/Services.astro';
+import Testimonios from '../components/Testimonios.astro';
+import Contacto  from '../components/Contacto.astro';
+import Footer    from '../components/Footer.astro';
+
+import '../styles/global.css';
+---
+
+<Layout
+  title="Ecuasucre — Cocina Ecuatoriana Auténtica en Barcelona"
+  description="Ecuasucre: sabores genuinos de la Costa, Sierra y Oriente ecuatorianos en el corazón de Barcelona. Fritada, ceviche, guatita, encebollado y mucho más."
+>
+  <!--
+    ════════════════════════════════════════════
+    ESTRUCTURA DE LA LANDING PAGE:
+
+    1. Nav         — Navegación fija con blur al scroll
+    2. Hero        — Hero full-viewport + Ken Burns + partículas + GSAP
+    3. Marquee     — Ticker de platos (dos filas, dirección opuesta)
+    4. Esencia     — Nuestra Historia (texto + imagen asimétrica)
+    5. Stats       — Contadores animados (5 años, 2000 platos…)
+    6. Regiones    — Costa · Sierra · Oriente (cards con tinte)
+    7. Cotopaxi    — Parallax break cinematográfico
+    8. Services    — Bento UI Especialidades + Galería interior
+    9. Testimonios — Reseñas reales de Google
+    10. Contacto   — Horarios + Reserva (WhatsApp / Teléfono)
+    11. Footer     — Logo + RRSS + copyright
+    ════════════════════════════════════════════
+  -->
+
+  <Nav />
+  <Hero />
+  <Marquee />
+  <Esencia />
+  <Stats />
+  <Regiones />
+  <Cotopaxi />
+  <Services />
+  <Testimonios />
+  <Contacto />
+  <Footer />
+</Layout>

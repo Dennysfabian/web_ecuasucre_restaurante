@@ -1,0 +1,127 @@
+---
+interface Props {
+  title?:       string;
+  description?: string;
+}
+
+const {
+  title       = 'Ecuasucre — Cocina Ecuatoriana Auténtica en Barcelona',
+  description = 'Ecuasucre: sabores genuinos del Ecuador en el corazón de Barcelona. Fritada serrana, ceviche de la Costa, guatita, encebollado y mucho más. Cocina con alma.',
+} = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <link rel="icon" type="image/png" href="/imagenes/logo_sucre.png" />
+
+  <title>{title}</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title"       content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image"       content="/imagenes/interior_uno.webp" />
+  <meta property="og:type"        content="website" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cinzel:wght@400;500;600&family=Lato:wght@300;400;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!--
+    GSAP + ScrollTrigger cargado síncronamente en <head>
+    para que todos los componentes puedan usarlo.
+  -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+</head>
+
+<body class="overflow-x-hidden">
+  <slot />
+
+  <!-- ── SCROLL REVEAL (IntersectionObserver global) ── -->
+  <script is:inline>
+    (function () {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('is-visible');
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach((el) => io.observe(el));
+    })();
+  </script>
+
+  <!-- ── NAV SCROLL BEHAVIOR ── -->
+  <script is:inline>
+    (function () {
+      const nav = document.getElementById('main-nav');
+      if (!nav) return;
+      window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 70);
+      }, { passive: true });
+    })();
+  </script>
+
+  <!-- ── MOBILE MENU TOGGLE ── -->
+  <script is:inline>
+    (function () {
+      const btn   = document.getElementById('menu-btn');
+      const menu  = document.getElementById('mobile-menu');
+      const close = document.getElementById('menu-close');
+      if (!btn || !menu) return;
+
+      function open()  { menu.classList.add('open');  document.body.style.overflow = 'hidden'; }
+      function shut()  { menu.classList.remove('open'); document.body.style.overflow = ''; }
+
+      btn.addEventListener('click', open);
+      if (close) close.addEventListener('click', shut);
+      menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', shut));
+    })();
+  </script>
+
+  <!-- ── COUNTER ANIMATION ── -->
+  <script is:inline>
+    (function () {
+      const counters = document.querySelectorAll('[data-count]');
+      if (!counters.length) return;
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            const el      = e.target;
+            const target  = +el.dataset.count;
+            const prefix  = el.dataset.prefix || '';
+            const suffix  = el.dataset.suffix || '';
+            const dur     = 1800;
+            const start   = performance.now();
+
+            function tick(now) {
+              const elapsed = now - start;
+              const pct     = Math.min(elapsed / dur, 1);
+              const ease    = 1 - Math.pow(1 - pct, 3); // ease-out cubic
+              el.textContent = prefix + Math.round(target * ease).toLocaleString('es') + suffix;
+              if (pct < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+            io.unobserve(el);
+          });
+        },
+        { threshold: 0.4 }
+      );
+      counters.forEach((el) => io.observe(el));
+    })();
+  </script>
+</body>
+</html>
