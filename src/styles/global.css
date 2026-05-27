@@ -216,7 +216,7 @@
 
 /* ── MOBILE MENU ───────────────────────────────────────── */
 #mobile-menu {
-  display: none; position: fixed; inset: 0; z-index: 99;
+  display: none; position: fixed; inset: 0; z-index: 101;
   background: rgba(13,8,6,.97);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
